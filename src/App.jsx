@@ -1,7 +1,14 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+
+// Importar Páginas
 import Login from './pages/Login';
-import './styles/styles.css'; // Importante: tu CSS original
+import DashboardAdmin from './pages/DashboardAdmin';
+import DashboardConserje from './pages/DashboardConserje';
+import DashboardResidente from './pages/DashboardResidente';
+
+import './styles/styles.css';
 
 function App() {
     return (
@@ -11,12 +18,28 @@ function App() {
                     {/* Ruta Pública */}
                     <Route path="/" element={<Login />} />
                     
-                    {/* Rutas Protegidas (Por ahora mostramos texto para probar) */}
-                    <Route path="/admin" element={<div style={{padding: '50px', textAlign: 'center'}}>Dashboard Admin (Próximamente)</div>} />
-                    <Route path="/conserje" element={<div style={{padding: '50px', textAlign: 'center'}}>Dashboard Conserje (Próximamente)</div>} />
-                    <Route path="/residente" element={<div style={{padding: '50px', textAlign: 'center'}}>Dashboard Residente (Próximamente)</div>} />
+                    {/* Rutas Protegidas - ADMINISTRADOR */}
+                    <Route path="/admin" element={
+                        <ProtectedRoute roles={['Administrador']}>
+                            <DashboardAdmin />
+                        </ProtectedRoute>
+                    } />
                     
-                    {/* Cualquier otra ruta redirige al login */}
+                    {/* Rutas Protegidas - CONSERJE */}
+                    <Route path="/conserje" element={
+                        <ProtectedRoute roles={['Conserje']}>
+                            <DashboardConserje />
+                        </ProtectedRoute>
+                    } />
+                    
+                    {/* Rutas Protegidas - RESIDENTE */}
+                    <Route path="/residente" element={
+                        <ProtectedRoute roles={['Residente']}>
+                            <DashboardResidente />
+                        </ProtectedRoute>
+                    } />
+                    
+                    {/* Redirección por defecto */}
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </BrowserRouter>
