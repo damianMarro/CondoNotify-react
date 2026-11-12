@@ -2,12 +2,13 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 
+
 // Importar Páginas
 import Login from './pages/Login';
 import DashboardAdmin from './pages/DashboardAdmin';
 import DashboardConserje from './pages/DashboardConserje';
 import DashboardResidente from './pages/DashboardResidente';
-
+import AdminUsuarios from './pages/AdminUsuarios';
 import './styles/styles.css';
 
 function App() {
@@ -24,6 +25,13 @@ function App() {
                             <DashboardAdmin />
                         </ProtectedRoute>
                     } />
+                    
+                    {/* Ruta del Mantenedor de Usuarios */}
+                    <Route path="/admin/usuarios" element={
+                        <ProtectedRoute roles={['Administrador']}>
+                            <AdminUsuarios />
+                        </ProtectedRoute>
+                    } /> 
                     
                     {/* Rutas Protegidas - CONSERJE */}
                     <Route path="/conserje" element={
