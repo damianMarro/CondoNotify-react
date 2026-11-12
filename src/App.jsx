@@ -1,27 +1,26 @@
-import './styles/styles.css';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import Login from './pages/Login';
+import './styles/styles.css'; // Importante: tu CSS original
 
 function App() {
     return (
-        <div className="app">
-            <header className="main-header">
-                <div className="container header-container">
-                    <div className="logo">
-                        <img 
-                            src="/img/CondoNotifyLogo.png" 
-                            alt="Logo CondoNotify" 
-                            className="logo-img" 
-                        />
-                        <span className="logo-text">CondoNotify</span>
-                    </div>
-                </div>
-            </header>
-            <main className="main-content">
-                <div className="container">
-                    <h1>🚀 CondoNotify migrando a React</h1>
-                    <p>El CSS ya está aplicado. ¡Vamos paso a paso!</p>
-                </div>
-            </main>
-        </div>
+        <AuthProvider>
+            <BrowserRouter>
+                <Routes>
+                    {/* Ruta Pública */}
+                    <Route path="/" element={<Login />} />
+                    
+                    {/* Rutas Protegidas (Por ahora mostramos texto para probar) */}
+                    <Route path="/admin" element={<div style={{padding: '50px', textAlign: 'center'}}>Dashboard Admin (Próximamente)</div>} />
+                    <Route path="/conserje" element={<div style={{padding: '50px', textAlign: 'center'}}>Dashboard Conserje (Próximamente)</div>} />
+                    <Route path="/residente" element={<div style={{padding: '50px', textAlign: 'center'}}>Dashboard Residente (Próximamente)</div>} />
+                    
+                    {/* Cualquier otra ruta redirige al login */}
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+            </BrowserRouter>
+        </AuthProvider>
     );
 }
 
