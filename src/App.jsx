@@ -9,6 +9,7 @@ import DashboardAdmin from './pages/DashboardAdmin';
 import DashboardConserje from './pages/DashboardConserje';
 import DashboardResidente from './pages/DashboardResidente';
 import AdminUsuarios from './pages/AdminUsuarios';
+import AdminProductos from './pages/AdminProductos';
 import './styles/styles.css';
 
 function App() {
@@ -32,6 +33,12 @@ function App() {
                             <AdminUsuarios />
                         </ProtectedRoute>
                     } /> 
+
+                    <Route path="/admin/productos" element={
+                    <ProtectedRoute roles={['Administrador']}>
+                            <AdminProductos />
+                        </ProtectedRoute>
+                    } />
                     
                     {/* Rutas Protegidas - CONSERJE */}
                     <Route path="/conserje" element={
