@@ -11,6 +11,7 @@ import DashboardResidente from './pages/DashboardResidente';
 import AdminUsuarios from './pages/AdminUsuarios';
 import AdminProductos from './pages/AdminProductos';
 import ConserjeDeliveries from './pages/ConserjeDeliveries';
+import ResidenteReportes from './pages/ResidenteReportes';
 import './styles/styles.css';
 
 function App() {
@@ -53,7 +54,13 @@ function App() {
                             <ConserjeDeliveries />
                         </ProtectedRoute>
                     } />
-                    
+
+                    <Route path="/residente/reportes" element={
+                        <ProtectedRoute roles={['Residente']}>
+                            <ResidenteReportes />
+                        </ProtectedRoute>
+                    } />
+                                        
                     {/* Rutas Protegidas - RESIDENTE */}
                     <Route path="/residente" element={
                         <ProtectedRoute roles={['Residente']}>
