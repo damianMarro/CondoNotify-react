@@ -10,6 +10,7 @@ import DashboardConserje from './pages/DashboardConserje';
 import DashboardResidente from './pages/DashboardResidente';
 import AdminUsuarios from './pages/AdminUsuarios';
 import AdminProductos from './pages/AdminProductos';
+import ConserjeDeliveries from './pages/ConserjeDeliveries';
 import './styles/styles.css';
 
 function App() {
@@ -44,6 +45,12 @@ function App() {
                     <Route path="/conserje" element={
                         <ProtectedRoute roles={['Conserje']}>
                             <DashboardConserje />
+                        </ProtectedRoute>
+                    } />
+
+                    <Route path="/conserje/deliveries" element={
+                        <ProtectedRoute roles={['Conserje']}>
+                            <ConserjeDeliveries />
                         </ProtectedRoute>
                     } />
                     
