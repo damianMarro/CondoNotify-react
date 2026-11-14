@@ -14,6 +14,7 @@ import ConserjeDeliveries from './pages/ConserjeDeliveries';
 import ResidenteReportes from './pages/ResidenteReportes';
 import Tienda from './pages/Tienda';
 import Carrito from './pages/Carrito';
+import AdminAnuncios from './pages/AdminAnuncios';
 import './styles/styles.css';
 
 function App() {
@@ -43,6 +44,13 @@ function App() {
                             <AdminProductos />
                         </ProtectedRoute>
                     } />
+
+                    <Route path="/admin/anuncios" element={
+                    <ProtectedRoute roles={['Administrador']}>
+                            <AdminAnuncios />
+                        </ProtectedRoute>
+                    } />
+
                     <Route path="/residente/tienda" element={
                     <ProtectedRoute roles={['Residente']}>
                             <Tienda />
