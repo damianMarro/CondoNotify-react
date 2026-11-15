@@ -15,6 +15,7 @@ import ResidenteReportes from './pages/ResidenteReportes';
 import Tienda from './pages/Tienda';
 import Carrito from './pages/Carrito';
 import AdminAnuncios from './pages/AdminAnuncios';
+import AdminReportes from './pages/AdminReportes';
 import './styles/styles.css';
 
 function App() {
@@ -48,6 +49,18 @@ function App() {
                     <Route path="/admin/anuncios" element={
                     <ProtectedRoute roles={['Administrador']}>
                             <AdminAnuncios />
+                        </ProtectedRoute>
+                    } />
+
+                    <Route path="/admin/reportes" element={
+                        <ProtectedRoute roles={['Administrador', 'Conserje']}>
+                            <AdminReportes />
+                        </ProtectedRoute>
+                    } />
+
+                    <Route path="/conserje/reportes" element={
+                        <ProtectedRoute roles={['Administrador', 'Conserje']}>
+                            <AdminReportes />
                         </ProtectedRoute>
                     } />
 
