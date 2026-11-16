@@ -16,6 +16,7 @@ import Tienda from './pages/Tienda';
 import Carrito from './pages/Carrito';
 import AdminAnuncios from './pages/AdminAnuncios';
 import AdminReportes from './pages/AdminReportes';
+import ResidenteNotificaciones from './pages/ResidenteNotificaciones';
 import './styles/styles.css';
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
                         </ProtectedRoute>
                     } />
 
+<<<<<<< HEAD
                     <Route path="/admin/reportes" element={
                         <ProtectedRoute roles={['Administrador', 'Conserje']}>
                             <AdminReportes />
@@ -61,6 +63,11 @@ function App() {
                     <Route path="/conserje/reportes" element={
                         <ProtectedRoute roles={['Administrador', 'Conserje']}>
                             <AdminReportes />
+=======
+                    <Route path="/residente/notificaciones" element={
+                        <ProtectedRoute roles={['Residente']}>
+                            <ResidenteNotificaciones />
+>>>>>>> 5fbe8b1b6c41e648ef881f63e765daf67fa43a66
                         </ProtectedRoute>
                     } />
 
