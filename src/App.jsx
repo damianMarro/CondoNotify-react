@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 
-
 // Importar Páginas
 import Login from './pages/Login';
 import DashboardAdmin from './pages/DashboardAdmin';
@@ -10,13 +9,16 @@ import DashboardConserje from './pages/DashboardConserje';
 import DashboardResidente from './pages/DashboardResidente';
 import AdminUsuarios from './pages/AdminUsuarios';
 import AdminProductos from './pages/AdminProductos';
+import AdminReportes from './pages/AdminReportes';
+import AdminAnuncios from './pages/AdminAnuncios';
 import ConserjeDeliveries from './pages/ConserjeDeliveries';
 import ResidenteReportes from './pages/ResidenteReportes';
+import ResidenteNotificaciones from './pages/ResidenteNotificaciones';
 import Tienda from './pages/Tienda';
 import Carrito from './pages/Carrito';
-import AdminAnuncios from './pages/AdminAnuncios';
-import AdminReportes from './pages/AdminReportes';
-import ResidenteNotificaciones from './pages/ResidenteNotificaciones';
+import AdminLogs from './pages/AdminLogs';
+
+
 import './styles/styles.css';
 
 function App() {
@@ -27,85 +29,75 @@ function App() {
                     {/* Ruta Pública */}
                     <Route path="/" element={<Login />} />
                     
-                    {/* Rutas Protegidas - ADMINISTRADOR */}
+                    {/* ================= ADMINISTRADOR ================= */}
                     <Route path="/admin" element={
                         <ProtectedRoute roles={['Administrador']}>
                             <DashboardAdmin />
                         </ProtectedRoute>
                     } />
-                    
-                    {/* Ruta del Mantenedor de Usuarios */}
                     <Route path="/admin/usuarios" element={
                         <ProtectedRoute roles={['Administrador']}>
                             <AdminUsuarios />
                         </ProtectedRoute>
-                    } /> 
-
+                    } />
                     <Route path="/admin/productos" element={
-                    <ProtectedRoute roles={['Administrador']}>
+                        <ProtectedRoute roles={['Administrador']}>
                             <AdminProductos />
                         </ProtectedRoute>
                     } />
-
-                    <Route path="/admin/anuncios" element={
-                    <ProtectedRoute roles={['Administrador']}>
-                            <AdminAnuncios />
-                        </ProtectedRoute>
-                    } />
-
-<<<<<<< HEAD
                     <Route path="/admin/reportes" element={
                         <ProtectedRoute roles={['Administrador', 'Conserje']}>
                             <AdminReportes />
                         </ProtectedRoute>
                     } />
-
-                    <Route path="/conserje/reportes" element={
-                        <ProtectedRoute roles={['Administrador', 'Conserje']}>
-                            <AdminReportes />
-=======
-                    <Route path="/residente/notificaciones" element={
-                        <ProtectedRoute roles={['Residente']}>
-                            <ResidenteNotificaciones />
->>>>>>> 5fbe8b1b6c41e648ef881f63e765daf67fa43a66
+                    <Route path="/admin/anuncios" element={
+                        <ProtectedRoute roles={['Administrador']}>
+                            <AdminAnuncios />
                         </ProtectedRoute>
                     } />
 
-                    <Route path="/residente/tienda" element={
-                    <ProtectedRoute roles={['Residente']}>
-                            <Tienda />
+                    <Route path="/admin/logs" element={
+                        <ProtectedRoute roles={['Administrador']}>
+                            <AdminLogs />
                         </ProtectedRoute>
-                    } />
+                    } />    
 
-                    <Route path="/residente/carrito" element={
-                    <ProtectedRoute roles={['Residente']}>
-                            <Carrito />
-                        </ProtectedRoute>
-                    } />
-                    
-                    {/* Rutas Protegidas - CONSERJE */}
+                    {/* ================= CONSERJE ================= */}
                     <Route path="/conserje" element={
                         <ProtectedRoute roles={['Conserje']}>
                             <DashboardConserje />
                         </ProtectedRoute>
                     } />
-
                     <Route path="/conserje/deliveries" element={
                         <ProtectedRoute roles={['Conserje']}>
                             <ConserjeDeliveries />
                         </ProtectedRoute>
                     } />
 
+                    {/* ================= RESIDENTE ================= */}
+                    <Route path="/residente" element={
+                        <ProtectedRoute roles={['Residente']}>
+                            <DashboardResidente />
+                        </ProtectedRoute>
+                    } />
                     <Route path="/residente/reportes" element={
                         <ProtectedRoute roles={['Residente']}>
                             <ResidenteReportes />
                         </ProtectedRoute>
                     } />
-                                        
-                    {/* Rutas Protegidas - RESIDENTE */}
-                    <Route path="/residente" element={
+                    <Route path="/residente/notificaciones" element={
                         <ProtectedRoute roles={['Residente']}>
-                            <DashboardResidente />
+                            <ResidenteNotificaciones />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/residente/tienda" element={
+                        <ProtectedRoute roles={['Residente']}>
+                            <Tienda />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/residente/carrito" element={
+                        <ProtectedRoute roles={['Residente']}>
+                            <Carrito />
                         </ProtectedRoute>
                     } />
                     
