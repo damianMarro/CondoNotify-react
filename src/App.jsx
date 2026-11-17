@@ -17,6 +17,8 @@ import ResidenteNotificaciones from './pages/ResidenteNotificaciones';
 import Tienda from './pages/Tienda';
 import Carrito from './pages/Carrito';
 import AdminLogs from './pages/AdminLogs';
+import AdminBackup from './pages/AdminBackup';
+import ConserjeInvitados from './pages/ConserjeInvitados';
 
 
 import './styles/styles.css';
@@ -60,7 +62,14 @@ function App() {
                         <ProtectedRoute roles={['Administrador']}>
                             <AdminLogs />
                         </ProtectedRoute>
-                    } />    
+                    } />
+
+                    <Route path="/admin/backup" element={
+                    <ProtectedRoute roles={['Administrador']}>
+                        <AdminBackup />
+                    </ProtectedRoute>
+                    } />
+
 
                     {/* ================= CONSERJE ================= */}
                     <Route path="/conserje" element={
@@ -71,6 +80,12 @@ function App() {
                     <Route path="/conserje/deliveries" element={
                         <ProtectedRoute roles={['Conserje']}>
                             <ConserjeDeliveries />
+                        </ProtectedRoute>
+                    } />
+
+                    <Route path="/conserje/invitados" element={
+                        <ProtectedRoute roles={['Conserje']}>
+                            <ConserjeInvitados />
                         </ProtectedRoute>
                     } />
 
