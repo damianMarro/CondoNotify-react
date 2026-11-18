@@ -12,109 +12,154 @@ function ResidenteNotificaciones() {
     const [filtroTipo, setFiltroTipo] = useState('');
     const [filtroEstado, setFiltroEstado] = useState('');
 
+    // Guardar cambios en LocalStorage
     const actualizarNotificaciones = (nuevas) => {
         setNotificaciones(nuevas);
         Storage.save(NOTIF_KEY, nuevas);
     };
 
+    // Marcar una como leída
     const marcarLeida = (index) => {
         const nuevas = [...notificaciones];
         nuevas[index].leida = true;
         actualizarNotificaciones(nuevas);
     };
 
+    // Marcar todas como leídas
     const marcarTodasLeidas = () => {
         const nuevas = notificaciones.map(n => ({ ...n, leida: true }));
         actualizarNotificaciones(nuevas);
     };
 
+    // Eliminar notificación
     const eliminarNotificacion = (index) => {
         if (!window.confirm('¿Eliminar esta notificación?')) return;
         const nuevas = notificaciones.filter((_, i) => i !== index);
         actualizarNotificaciones(nuevas);
     };
 
+    // Helpers visuales
     const infoTipo = (tipo) => {
         const tipos = {
-            'delivery': { icono: '📦', etiqueta: 'Delivery', color: 'border-blue-200 dark:border-blue-800' },
-            'invitado': { icono: '🚶', etiqueta: 'Invitado', color: 'border-amber-200 dark:border-amber-800' },
-            'anuncio': { icono: '📢', etiqueta: 'Anuncio', color: 'border-purple-200 dark:border-purple-800' },
-            'reporte': { icono: '📋', etiqueta: 'Reporte', color: 'border-pink-200 dark:border-pink-800' },
-            'reporte_actualizado': { icono: '🔧', etiqueta: 'Reporte Actualizado', color: 'border-pink-200 dark:border-pink-800' }
+            'delivery': { icono: '📦', etiqueta: 'Delivery', clase: 'notif-delivery' },
+            'invitado': { icono: '🚶', etiqueta: 'Invitado', clase: 'notif-invitado' },
+            'anuncio': { icono: '📢', etiqueta: 'Anuncio', clase: 'notif-anuncio' },
+            'reporte': { icono: '📋', etiqueta: 'Reporte', clase: 'notif-reporte' },
+            'reporte_actualizado': { icono: '🔧', etiqueta: 'Reporte Actualizado', clase: 'notif-reporte' }
         };
-        return tipos[tipo] || { icono: '🔔', etiqueta: 'Aviso', color: 'border-slate-200' };
+        return tipos[tipo] || { icono: '🔔', etiqueta: 'Aviso', clase: 'notif-default' };
     };
 
+    // Filtros
     const notificacionesFiltradas = notificaciones
         .filter(n => !filtroTipo || n.tipo === filtroTipo)
         .filter(n => !filtroEstado || (filtroEstado === 'no_leida' && !n.leida) || (filtroEstado === 'leida' && n.leida))
-        .sort((a, b) => a.leida === b.leida ? b.timestamp - a.timestamp : (a.leida ? 1 : -1));
+        .sort((a, b) => {
+            if (a.leida !== b.leida) return a.leida ? 1 : -1;
+            return b.timestamp - a.timestamp;
+        });
 
     const noLeidas = notificaciones.filter(n => !n.leida).length;
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col font-sans transition-colors duration-200">
+        <>
             <Header volverA="/residente" />
-            
-            <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-                    <div>
-                        <h1 className="text-3xl font-bold text-slate-800 dark:text-white flex items-center gap-3">
-                            🔔 Mis Notificaciones
-                            {noLeidas > 0 && <span className="bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">{noLeidas}</span>}
-                        </h1>
+            <main className="main-content">
+                <div className="container">
+                    <div className="page-header">
+                        <div>
+                            <h1 className="page-title">
+                                🔔 Mis Notificaciones 
+                                {noLeidas > 0 && <span className="badge-notif">{noLeidas}</span>}
+                            </h1>
+                            <p className="page-subtitle">Total: {notificaciones.length} · No leídas: {noLeidas}</p>
+                        </div>
+                        <button 
+                            className="btn btn-primary" 
+                            onClick={marcarTodasLeidas}
+                            disabled={noLeidas === 0}
+                            style={{ opacity: noLeidas === 0 ? 0.5 : 1 }}
+                        >
+                            ✅ Marcar todas como leídas
+                        </button>
                     </div>
-                    <button 
-                        onClick={marcarTodasLeidas} 
-                        disabled={noLeidas === 0}
-                        className="text-sm font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 disabled:opacity-50 transition-all"
-                    >
-                        ✅ Marcar todas leídas
-                    </button>
-                </div>
 
-                <div className="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 mb-6 flex flex-col sm:flex-row gap-4">
-                    <select value={filtroTipo} onChange={e => setFiltroTipo(e.target.value)} className="w-full sm:w-1/2 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white focus:outline-none">
-                        <option value="">Todos los tipos</option>
-                        <option value="delivery">📦 Deliveries</option>
-                        <option value="anuncio">📢 Anuncios</option>
-                        <option value="reporte_actualizado">🔧 Reportes</option>
-                    </select>
-                    <select value={filtroEstado} onChange={e => setFiltroEstado(e.target.value)} className="w-full sm:w-1/2 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white focus:outline-none">
-                        <option value="">Todas</option>
-                        <option value="no_leida">🔴 No leídas</option>
-                        <option value="leida">✅ Leídas</option>
-                    </select>
-                </div>
-
-                <div className="space-y-3">
-                    {notificacionesFiltradas.map((n, index) => {
-                        const info = infoTipo(n.tipo);
-                        return (
-                            <div 
-                                key={index} 
-                                onClick={() => !n.leida && marcarLeida(notificaciones.indexOf(n))}
-                                className={`p-4 rounded-2xl border bg-white dark:bg-slate-800 transition-all cursor-pointer flex gap-4 ${info.color} ${!n.leida ? 'shadow-md border-l-4 border-l-blue-500' : 'opacity-70'}`}
-                            >
-                                <div className="text-3xl bg-slate-50 dark:bg-slate-700 w-12 h-12 flex items-center justify-center rounded-xl flex-shrink-0">{info.icono}</div>
-                                <div className="flex-1">
-                                    <div className="flex justify-between items-start mb-1">
-                                        <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{info.etiqueta}</span>
-                                        {!n.leida && <span className="text-xs font-bold text-blue-600 dark:text-blue-400">NUEVO</span>}
-                                    </div>
-                                    <h4 className="font-semibold text-slate-800 dark:text-white">{n.mensaje}</h4>
-                                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{n.detalle}</p>
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <button onClick={(e) => { e.stopPropagation(); eliminarNotificacion(notificaciones.indexOf(n)); }} className="text-slate-400 hover:text-red-500 p-1" aria-label="Eliminar">🗑️</button>
-                                </div>
+                    <section className="card filters-card">
+                        <div className="filters-grid">
+                            <div className="form-group">
+                                <label>Filtrar por Tipo</label>
+                                <select value={filtroTipo} onChange={e => setFiltroTipo(e.target.value)}>
+                                    <option value="">Todos los tipos</option>
+                                    <option value="delivery">📦 Deliveries</option>
+                                    <option value="anuncio">📢 Anuncios</option>
+                                    <option value="reporte_actualizado">🔧 Reportes</option>
+                                </select>
                             </div>
-                        );
-                    })}
+                            <div className="form-group">
+                                <label>Filtrar por Estado</label>
+                                <select value={filtroEstado} onChange={e => setFiltroEstado(e.target.value)}>
+                                    <option value="">Todas</option>
+                                    <option value="no_leida">🔴 No leídas</option>
+                                    <option value="leida">✅ Leídas</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div className="notificaciones-lista">
+                        {notificacionesFiltradas.length === 0 ? (
+                            <div className="empty-state">
+                                <p>📭 No tienes notificaciones con esos filtros.</p>
+                            </div>
+                        ) : (
+                            notificacionesFiltradas.map((n, index) => {
+                                const info = infoTipo(n.tipo);
+                                return (
+                                    <div 
+                                        key={index} 
+                                        className={`notif-card ${info.clase} ${n.leida ? 'notif-leida' : 'notif-no-leida'}`}
+                                        onClick={() => !n.leida && marcarLeida(notificaciones.indexOf(n))}
+                                        style={{ cursor: n.leida ? 'default' : 'pointer' }}
+                                    >
+                                        <div className="notif-icono">{info.icono}</div>
+                                        <div className="notif-contenido">
+                                            <div className="notif-header">
+                                                <span className="notif-tipo">{info.etiqueta}</span>
+                                                {!n.leida && <span className="notif-nuevo">NUEVO</span>}
+                                                <span className="notif-fecha">{n.fecha}</span>
+                                            </div>
+                                            <h4 className="notif-mensaje">{n.mensaje}</h4>
+                                            {n.detalle && <p className="notif-detalle">{n.detalle}</p>}
+                                        </div>
+                                        <div className="notif-acciones">
+                                            {!n.leida && (
+                                                <button 
+                                                    className="btn-icon" 
+                                                    title="Marcar como leída"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation(); // Evita que se active el clic de la tarjeta
+                                                        marcarLeida(notificaciones.indexOf(n));
+                                                    }}
+                                                >✅</button>
+                                            )}
+                                            <button 
+                                                className="btn-icon btn-delete" 
+                                                title="Eliminar"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    eliminarNotificacion(notificaciones.indexOf(n));
+                                                }}
+                                            >🗑️</button>
+                                        </div>
+                                    </div>
+                                );
+                            })
+                        )}
+                    </div>
                 </div>
             </main>
             <Footer />
-        </div>
+        </>
     );
 }
 

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { useAuth } from '../contexts/AuthContext';
 
 function DashboardAdmin() {
@@ -15,32 +16,26 @@ function DashboardAdmin() {
     ];
 
     return (
-        <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+        <>
             <Header />
-            
-            <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-slate-800">¡Hola, {usuario?.nombre}! 👋</h1>
-                    <p className="text-slate-500 mt-1">Panel de Administrador. ¿Qué deseas gestionar hoy?</p>
-                </div>
+            <main className="main-content">
+                <div className="container">
+                    <h1 className="page-title">¡Hola, {usuario?.nombre}!</h1>
+                    <p className="page-subtitle">Panel de Administrador</p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {tarjetas.map((tarjeta, index) => (
-                        <Link 
-                            to={tarjeta.ruta} 
-                            key={index} 
-                            className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 flex flex-col items-center text-center group cursor-pointer"
-                        >
-                            <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">
-                                {tarjeta.icono}
-                            </div>
-                            <h2 className="text-lg font-bold text-slate-800 mb-2">{tarjeta.titulo}</h2>
-                            <p className="text-sm text-slate-500 leading-relaxed">{tarjeta.desc}</p>
-                        </Link>
-                    ))}
+                    <section className="dashboard-grid">
+                        {tarjetas.map((tarjeta, index) => (
+                            <Link to={tarjeta.ruta} key={index} className="card dashboard-card" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <div className="card-icon">{tarjeta.icono}</div>
+                                <h2>{tarjeta.titulo}</h2>
+                                <p>{tarjeta.desc}</p>
+                            </Link>
+                        ))}
+                    </section>
                 </div>
             </main>
-        </div>
+            <Footer />
+        </>
     );
 }
 
