@@ -1,9 +1,39 @@
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 function Header({ volverA = null, mostrarUsuario = true }) {
     const { usuario, logout } = useAuth();
     const navigate = useNavigate();
+    
+    // Estado para controlar si el header está visible o no
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    // Efecto para detectar la dirección del scroll
+    useEffect(() => {
+        const controlNavbar = () => {
+            const currentScrollY = window.scrollY;
+            
+            // Si bajamos más de 50px, ocultamos el header
+            if (currentScrollY > lastScrollY && currentScrollY > 50) {
+                setIsVisible(false);
+            } 
+            // Si subimos, lo mostramos de nuevo
+            else if (currentScrollY < lastScrollY) {
+                setIsVisible(true);
+            }
+            
+            setLastScrollY(currentScrollY);
+        };
+
+        window.addEventListener('scroll', controlNavbar);
+        
+        // Limpiamos el evento al desmontar el componente
+        return () => {
+            window.removeEventListener('scroll', controlNavbar);
+        };
+    }, [lastScrollY]);
 
     function handleLogout() {
         logout();
@@ -11,7 +41,11 @@ function Header({ volverA = null, mostrarUsuario = true }) {
     }
 
     return (
-        <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 transition-colors duration-200">
+        <header 
+            className={`bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 fixed top-0 w-full z-50 transition-transform duration-300 ease-in-out ${
+                isVisible ? 'translate-y-0' : '-translate-y-full'
+            }`}
+        >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                 
                 {/* Logo */}
@@ -29,7 +63,7 @@ function Header({ volverA = null, mostrarUsuario = true }) {
                 {/* Navegación / Usuario */}
                 <nav className="flex items-center gap-3 sm:gap-4">
                     {mostrarUsuario && usuario && (
-                        <div className="hidden sm:flex items-center gap-2 bg-slate-50 dark:bg-slate-700 px-3 py-1.5 rounded-full border border-slate-100 dark:border-slate-600">
+                        <div className="hidden sm:flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-full border border-slate-100 dark:border-slate-700">
                             <span className="text-slate-400 dark:text-slate-300">👤</span>
                             <span className="text-sm font-medium text-slate-700 dark:text-slate-200">{usuario.nombre}</span>
                         </div>
@@ -47,7 +81,7 @@ function Header({ volverA = null, mostrarUsuario = true }) {
                     {usuario && (
                         <button 
                             onClick={handleLogout} 
-                            className="text-sm font-medium bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-4 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500"
+                            className="text-sm font-medium bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-4 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500"
                         >
                             Cerrar Sesión
                         </button>

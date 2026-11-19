@@ -66,7 +66,7 @@ function Login() {
         <div className="min-h-screen bg-slate-900 flex flex-col font-sans">
             <Header mostrarUsuario={false} />
             
-            <main className="flex-1 flex items-center justify-center p-4 py-10">
+            <main style={{ paddingTop: '80px', paddingBottom: '40px' }} className="flex-1 flex items-center justify-center p-4">
                 
                 {/* TARJETA */}
                 <div style={cardStyle}>

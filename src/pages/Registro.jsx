@@ -54,65 +54,122 @@ function Registro() {
         }, 2000);
     };
 
+    // Estilos forzados (igual que en el Login)
+    const cardStyle = {
+        backgroundColor: '#1e293b', 
+        padding: '40px',            
+        borderRadius: '16px',       
+        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5)', 
+        width: '100%',
+        maxWidth: '550px', // Un poco más ancho para los 2 campos
+        border: '1px solid #334155'
+    };
+
+    const inputStyle = {
+        width: '100%',
+        padding: '12px 16px',       
+        borderRadius: '8px',
+        backgroundColor: '#334155',
+        color: 'white',
+        border: '1px solid #475569',
+        outline: 'none'
+    };
+
+    const labelStyle = {
+        display: 'block', 
+        color: '#cbd5e1', 
+        fontSize: '14px', 
+        fontWeight: '600', 
+        marginBottom: '8px'
+    };
+
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col font-sans transition-colors duration-200">
+        <div className="min-h-screen bg-slate-900 flex flex-col font-sans">
             <Header mostrarUsuario={false} />
             
-            <main className="flex-1 flex items-center justify-center p-4 py-10">
-                <div className="bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none w-full max-w-lg border border-slate-100 dark:border-slate-700">
+            <main style={{ paddingTop: '80px', paddingBottom: '40px' }} className="flex-1 flex items-center justify-center p-4">
+                
+                <div style={cardStyle}>
                     
-                    <div className="text-center mb-8">
-                        <h1 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">Crear Cuenta</h1>
-                        <p className="text-slate-500 dark:text-slate-400 text-sm">Únete a la comunidad de CondoNotify</p>
+                    <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+                        <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: 'white', marginBottom: '8px' }}>
+                            Crear Cuenta
+                        </h1>
+                        <p style={{ color: '#94a3b8', fontSize: '14px' }}>
+                            Únete a la comunidad de CondoNotify
+                        </p>
                     </div>
 
-                    <form onSubmit={handleRegistro} className="space-y-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <form onSubmit={handleRegistro} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                        
+                        {/* Fila 1: RUT y Nombre */}
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
                             <div>
-                                <label htmlFor="rut" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">RUT *</label>
-                                <input id="rut" type="text" name="rut" value={form.rut} onChange={handleChange} placeholder="Ej: 19011022K" className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none" />
-                                {errores.rut && <p className="text-red-500 text-xs mt-1">{errores.rut}</p>}
+                                <label style={labelStyle}>RUT *</label>
+                                <input type="text" name="rut" value={form.rut} onChange={handleChange} placeholder="Ej: 19011022K" style={inputStyle} />
+                                {errores.rut && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '5px' }}>{errores.rut}</p>}
                             </div>
                             <div>
-                                <label htmlFor="nombre" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Nombre Completo *</label>
-                                <input id="nombre" type="text" name="nombre" value={form.nombre} onChange={handleChange} placeholder="Tu nombre" className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none" />
-                                {errores.nombre && <p className="text-red-500 text-xs mt-1">{errores.nombre}</p>}
+                                <label style={labelStyle}>Nombre Completo *</label>
+                                <input type="text" name="nombre" value={form.nombre} onChange={handleChange} placeholder="Tu nombre" style={inputStyle} />
+                                {errores.nombre && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '5px' }}>{errores.nombre}</p>}
                             </div>
                         </div>
 
+                        {/* Fila 2: Email */}
                         <div>
-                            <label htmlFor="email" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Correo Electrónico *</label>
-                            <input id="email" type="email" name="email" value={form.email} onChange={handleChange} placeholder="correo@ejemplo.com" className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none" />
-                            {errores.email && <p className="text-red-500 text-xs mt-1">{errores.email}</p>}
+                            <label style={labelStyle}>Correo Electrónico *</label>
+                            <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="correo@ejemplo.com" style={inputStyle} />
+                            {errores.email && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '5px' }}>{errores.email}</p>}
                         </div>
 
+                        {/* Fila 3: Teléfono */}
                         <div>
-                            <label htmlFor="telefono" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Teléfono</label>
-                            <input id="telefono" type="tel" name="telefono" value={form.telefono} onChange={handleChange} placeholder="+56912345678" className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none" />
+                            <label style={labelStyle}>Teléfono</label>
+                            <input type="tel" name="telefono" value={form.telefono} onChange={handleChange} placeholder="+56912345678" style={inputStyle} />
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {/* Fila 4: Contraseñas */}
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
                             <div>
-                                <label htmlFor="password" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Contraseña *</label>
-                                <input id="password" type="password" name="password" value={form.password} onChange={handleChange} placeholder="••••••••" className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none" />
-                                {errores.password && <p className="text-red-500 text-xs mt-1">{errores.password}</p>}
+                                <label style={labelStyle}>Contraseña *</label>
+                                <input type="password" name="password" value={form.password} onChange={handleChange} placeholder="••••••••" style={inputStyle} />
+                                {errores.password && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '5px' }}>{errores.password}</p>}
                             </div>
                             <div>
-                                <label htmlFor="confirmPassword" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Confirmar *</label>
-                                <input id="confirmPassword" type="password" name="confirmPassword" value={form.confirmPassword} onChange={handleChange} placeholder="••••••••" className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none" />
-                                {errores.confirmPassword && <p className="text-red-500 text-xs mt-1">{errores.confirmPassword}</p>}
+                                <label style={labelStyle}>Confirmar *</label>
+                                <input type="password" name="confirmPassword" value={form.confirmPassword} onChange={handleChange} placeholder="••••••••" style={inputStyle} />
+                                {errores.confirmPassword && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '5px' }}>{errores.confirmPassword}</p>}
                             </div>
                         </div>
 
-                        <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition-all shadow-lg shadow-blue-500/30 mt-4">
+                        <button 
+                            type="submit" 
+                            style={{ 
+                                width: '100%', 
+                                backgroundColor: '#2563eb', 
+                                color: 'white', 
+                                fontWeight: 'bold', 
+                                padding: '14px', 
+                                borderRadius: '8px', 
+                                border: 'none', 
+                                cursor: 'pointer',
+                                marginTop: '15px',
+                                fontSize: '16px'
+                            }}
+                        >
                             Registrarme
                         </button>
                         
-                        {mensajeExito && <div className="p-3 bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 rounded-lg text-sm font-medium text-center mt-4">{mensajeExito}</div>}
+                        {mensajeExito && (
+                            <div style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)', color: '#34d399', padding: '12px', borderRadius: '8px', fontSize: '14px', textAlign: 'center', marginTop: '10px' }}>
+                                {mensajeExito}
+                            </div>
+                        )}
                     </form>
 
-                    <div className="mt-8 text-center text-sm text-slate-500 dark:text-slate-400">
-                        ¿Ya tienes cuenta? <Link to="/" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Inicia sesión</Link>
+                    <div style={{ marginTop: '30px', textAlign: 'center', fontSize: '14px', color: '#94a3b8' }}>
+                        ¿Ya tienes cuenta? <Link to="/" style={{ color: '#60a5fa', fontWeight: 'bold', textDecoration: 'none' }}>Inicia sesión</Link>
                     </div>
                 </div>
             </main>
