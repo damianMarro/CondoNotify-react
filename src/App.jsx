@@ -16,6 +16,7 @@ import Tienda from './pages/Tienda';
 import Carrito from './pages/Carrito';
 import AdminAnuncios from './pages/AdminAnuncios';
 import ResidenteNotificaciones from './pages/ResidenteNotificaciones';
+import Registro from './pages/Registro';
 import './styles/styles.css';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                 <Routes>
                     {/* Ruta Pública */}
                     <Route path="/" element={<Login />} />
+                    <Route path="/registro" element={<Registro />} />
                     
                     {/* Rutas Protegidas - ADMINISTRADOR */}
                     <Route path="/admin" element={

@@ -41,52 +41,72 @@ function Login() {
     }
 
     return (
-        <>
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col font-sans transition-colors duration-200">
             <Header mostrarUsuario={false} />
-            <main className="main-content">
-                <section className="login-section">
-                    <div className="card login-card">
-                        <h1 className="card-title">Iniciar Sesión</h1>
-                        <p className="card-subtitle">Ingresa tus credenciales para acceder al sistema</p>
-
-                        <form onSubmit={handleSubmit} noValidate>
-                            <div className="form-group">
-                                <label htmlFor="rut">RUT (sin puntos ni guion)</label>
-                                <input
-                                    type="text"
-                                    id="rut"
-                                    value={rut}
-                                    onChange={(e) => setRut(e.target.value)}
-                                    placeholder="Ej: 19011022K"
-                                />
-                                {errores.rut && <span className="error-message">{errores.rut}</span>}
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="password">Contraseña</label>
-                                <input
-                                    type="password"
-                                    id="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    placeholder="Ingresa tu contraseña"
-                                />
-                                {errores.password && <span className="error-message">{errores.password}</span>}
-                            </div>
-
-                            {errores.general && <span className="error-message" style={{ display: 'block', textAlign: 'center' }}>{errores.general}</span>}
-
-                            <button type="submit" className="btn btn-primary btn-block">Ingresar</button>
-                        </form>
-
-                        <div className="login-links">
-                            <p>¿No tienes cuenta? <Link to="/registro">Regístrate aquí</Link></p>
-                        </div>
+            
+            <main className="flex-1 flex items-center justify-center p-4 py-10">
+                <div className="bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none w-full max-w-md border border-slate-100 dark:border-slate-700">
+                    
+                    <div className="text-center mb-8">
+                        <h1 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">Bienvenido de nuevo</h1>
+                        <p className="text-slate-500 dark:text-slate-400 text-sm">Ingresa tus credenciales para acceder</p>
                     </div>
-                </section>
+
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                        <div>
+                            <label htmlFor="rut" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                                RUT
+                            </label>
+                            <input
+                                id="rut"
+                                type="text"
+                                value={rut}
+                                onChange={(e) => setRut(e.target.value)}
+                                placeholder="Ej: 19011022K"
+                                className={`w-full px-4 py-3 rounded-xl border ${errores.rut ? 'border-red-300 bg-red-50 dark:border-red-500/50 dark:bg-red-900/20' : 'border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700'} text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all`}
+                            />
+                            {errores.rut && <p className="text-red-500 text-xs mt-1.5 font-medium">{errores.rut}</p>}
+                        </div>
+
+                        <div>
+                            <label htmlFor="password" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                                Contraseña
+                            </label>
+                            <input
+                                id="password"
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="••••••••"
+                                className={`w-full px-4 py-3 rounded-xl border ${errores.password ? 'border-red-300 bg-red-50 dark:border-red-500/50 dark:bg-red-900/20' : 'border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700'} text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all`}
+                            />
+                            {errores.password && <p className="text-red-500 text-xs mt-1.5 font-medium">{errores.password}</p>}
+                        </div>
+
+                        {errores.general && (
+                            <div className="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-3 rounded-xl text-sm text-center font-medium border border-red-100 dark:border-red-800">
+                                {errores.general}
+                            </div>
+                        )}
+
+                        <button 
+                            type="submit" 
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3.5 rounded-xl transition-all shadow-lg shadow-blue-500/30 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
+                        >
+                            Ingresar al sistema
+                        </button>
+                    </form>
+
+                    <div className="mt-8 text-center text-sm text-slate-500 dark:text-slate-400">
+                        ¿No tienes cuenta?{' '}
+                        <Link to="/registro" className="text-blue-600 dark:text-blue-400 font-semibold hover:text-blue-700 dark:hover:text-blue-300 hover:underline">
+                            Regístrate aquí
+                        </Link>
+                    </div>
+                </div>
             </main>
             <Footer />
-        </>
+        </div>
     );
 }
 
