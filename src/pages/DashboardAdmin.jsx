@@ -19,13 +19,15 @@ function DashboardAdmin() {
         <div className="min-h-screen bg-slate-900 flex flex-col font-sans">
             <Header />
             
-            
+            {/* pt-32 le da el espacio suficiente para que el Header no tape el título */}
             <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12">
-                <div className="mb-10 text-center sm:text-left">
+                
+                <div className="mb-10">
                     <h1 className="text-3xl font-bold text-white">¡Hola, {usuario?.nombre}! 👋</h1>
                     <p className="text-slate-400 mt-2">Panel de Administrador. ¿Qué deseas gestionar hoy?</p>
                 </div>
 
+                {/* Grid de tarjetas con Tailwind */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {tarjetas.map((tarjeta, index) => (
                         <Link 

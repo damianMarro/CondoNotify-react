@@ -16,12 +16,8 @@ function Login() {
         e.preventDefault();
         const nuevosErrores = {};
 
-        if (!validarRUT(rut)) {
-            nuevosErrores.rut = 'RUT inválido. Entre 7 y 9 caracteres, sin puntos ni guion, DV correcto.';
-        }
-        if (!validarPassword(password)) {
-            nuevosErrores.password = 'Contraseña inválida. Entre 6 y 12 caracteres, al menos 1 número y 1 letra.';
-        }
+        if (!validarRUT(rut)) nuevosErrores.rut = 'RUT inválido. Entre 7 y 9 caracteres, sin puntos ni guion, DV correcto.';
+        if (!validarPassword(password)) nuevosErrores.password = 'Contraseña inválida. Entre 6 y 12 caracteres, al menos 1 número y 1 letra.';
 
         setErrores(nuevosErrores);
         if (Object.keys(nuevosErrores).length > 0) return;
@@ -29,120 +25,68 @@ function Login() {
         const resultado = login(rut, password);
 
         if (resultado.exito) {
-            const rutas = {
-                'Administrador': '/admin',
-                'Conserje': '/conserje',
-                'Residente': '/residente'
-            };
+            const rutas = { 'Administrador': '/admin', 'Conserje': '/conserje', 'Residente': '/residente' };
             navigate(rutas[resultado.rol]);
         } else {
             setErrores({ general: 'RUT o contraseña incorrectos. Verifique sus datos.' });
         }
     }
 
-    // Estilos en línea para forzar el diseño y evitar problemas con Tailwind
-    const cardStyle = {
-        backgroundColor: '#1e293b', 
-        padding: '40px',            
-        borderRadius: '16px',       
-        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)', 
-        width: '100%',
-        maxWidth: '420px',
-        border: '1px solid #334155'
-    };
-
-    const inputStyle = {
-        width: '100%',
-        padding: '14px 16px',       
-        borderRadius: '8px',
-        backgroundColor: '#0f172a', // Fondo más oscuro para el input
-        color: 'white',
-        border: '1px solid #475569',
-        marginBottom: '5px',
-        outline: 'none',
-        fontSize: '15px'
-    };
-
-    const labelStyle = {
-        display: 'block', 
-        color: '#cbd5e1', 
-        fontSize: '14px', 
-        fontWeight: '600', 
-        marginBottom: '8px'
-    };
-
     return (
-        <div style={{ backgroundColor: '#0f172a', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <div className="min-h-screen bg-slate-900 flex flex-col font-sans">
             <Header mostrarUsuario={false} />
             
-            <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '100px', paddingBottom: '40px', paddingLeft: '20px', paddingRight: '20px' }}>
+            <main className="flex-1 flex items-center justify-center p-4 pt-32 pb-10">
                 
-                <div style={cardStyle}>
+                <div className="bg-slate-800 p-8 sm:p-10 rounded-2xl shadow-2xl w-full max-w-md border border-slate-700">
                     
-                    <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-                        <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: 'white', marginBottom: '8px' }}>
-                            Bienvenido de nuevo
-                        </h1>
-                        <p style={{ color: '#94a3b8', fontSize: '14px' }}>
-                            Ingresa tus credenciales para acceder
-                        </p>
+                    <div className="text-center mb-8">
+                        <h1 className="text-3xl font-bold text-white mb-2">Bienvenido de nuevo</h1>
+                        <p className="text-slate-400 text-sm">Ingresa tus credenciales para acceder</p>
                     </div>
 
-                    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                        
+                    <form onSubmit={handleSubmit} className="space-y-5">
                         <div>
-                            <label style={labelStyle}>RUT</label>
+                            <label className="block text-sm font-semibold text-slate-300 mb-1.5">RUT</label>
                             <input
                                 type="text"
                                 value={rut}
                                 onChange={(e) => setRut(e.target.value)}
                                 placeholder="Ej: 19011022K"
-                                style={inputStyle}
+                                className={`w-full px-4 py-3 rounded-xl border ${errores.rut ? 'border-red-500 bg-red-900/20' : 'border-slate-600 bg-slate-900'} text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all`}
                             />
-                            {errores.rut && <p style={{ color: '#ef4444', fontSize: '12px', margin: '5px 0 0 0' }}>{errores.rut}</p>}
+                            {errores.rut && <p className="text-red-400 text-xs mt-1.5 font-medium">{errores.rut}</p>}
                         </div>
 
                         <div>
-                            <label style={labelStyle}>Contraseña</label>
+                            <label className="block text-sm font-semibold text-slate-300 mb-1.5">Contraseña</label>
                             <input
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="••••••••"
-                                style={inputStyle}
+                                className={`w-full px-4 py-3 rounded-xl border ${errores.password ? 'border-red-500 bg-red-900/20' : 'border-slate-600 bg-slate-900'} text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all`}
                             />
-                            {errores.password && <p style={{ color: '#ef4444', fontSize: '12px', margin: '5px 0 0 0' }}>{errores.password}</p>}
+                            {errores.password && <p className="text-red-400 text-xs mt-1.5 font-medium">{errores.password}</p>}
                         </div>
 
                         {errores.general && (
-                            <div style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', border: '1px solid #ef4444', color: '#fca5a5', padding: '12px', borderRadius: '8px', fontSize: '14px', textAlign: 'center' }}>
+                            <div className="bg-red-900/30 text-red-400 p-3 rounded-xl text-sm text-center font-medium border border-red-800">
                                 {errores.general}
                             </div>
                         )}
 
                         <button 
                             type="submit" 
-                            style={{ 
-                                width: '100%', 
-                                backgroundColor: '#2563eb', 
-                                color: 'white', 
-                                fontWeight: 'bold', 
-                                padding: '14px', 
-                                borderRadius: '8px', 
-                                border: 'none', 
-                                cursor: 'pointer',
-                                marginTop: '10px',
-                                fontSize: '16px',
-                                transition: 'background-color 0.2s'
-                            }}
+                            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3.5 rounded-xl transition-all shadow-lg shadow-blue-500/30 mt-2"
                         >
                             Ingresar al sistema
                         </button>
                     </form>
 
-                    <div style={{ marginTop: '30px', textAlign: 'center', fontSize: '14px', color: '#94a3b8' }}>
+                    <div className="mt-8 text-center text-sm text-slate-400">
                         ¿No tienes cuenta?{' '}
-                        <Link to="/registro" style={{ color: '#60a5fa', fontWeight: 'bold', textDecoration: 'none' }}>
+                        <Link to="/registro" className="text-blue-400 font-semibold hover:text-blue-300 hover:underline">
                             Regístrate aquí
                         </Link>
                     </div>

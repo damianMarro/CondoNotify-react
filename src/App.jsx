@@ -22,7 +22,7 @@ import AdminBackup from './pages/AdminBackup';
 import ConserjeInvitados from './pages/ConserjeInvitados';
 
 
-import './styles/styles.css';
+//import './styles/styles.css';
 
 function App() {
     return (

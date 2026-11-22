@@ -13,10 +13,10 @@ function DashboardConserje() {
     ];
 
     return (
-        <div style={{ minHeight: '100vh', backgroundColor: '#0f172a', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ minHeight: '100vh', width: '100%', backgroundColor: '#0f172a', display: 'flex', flexDirection: 'column' }}>
             <Header />
             
-            <main style={{ flex: 1, padding: '40px 20px', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
+            <main style={{ flex: 1, padding: '40px 20px', maxWidth: '1200px', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
                 <div style={{ marginBottom: '40px' }}>
                     <h1 style={{ fontSize: '32px', fontWeight: 'bold', color: 'white', margin: 0 }}>¡Hola, {usuario?.nombre}! 👋</h1>
                     <p style={{ color: '#94a3b8', marginTop: '10px' }}>Panel de Conserjería. Registra los accesos del día.</p>
@@ -28,8 +28,8 @@ function DashboardConserje() {
                             to={tarjeta.ruta} 
                             key={index} 
                             style={{ backgroundColor: '#1e293b', padding: '24px', borderRadius: '16px', border: '1px solid #334155', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', textDecoration: 'none', color: 'white', transition: 'all 0.2s' }}
-                            onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.borderColor = '#3b82f6'; }}
-                            onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.borderColor = '#334155'; }}
+                            onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.borderColor = '#3b82f6'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(59, 130, 246, 0.2)'; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderColor = '#334155'; e.currentTarget.style.boxShadow = 'none'; }}
                         >
                             <div style={{ width: '64px', height: '64px', backgroundColor: '#334155', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px', marginBottom: '16px' }}>
                                 {tarjeta.icono}
