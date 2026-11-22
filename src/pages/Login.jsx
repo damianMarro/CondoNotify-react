@@ -124,7 +124,7 @@ function Login() {
                             type="submit" 
                             style={{ 
                                 width: '100%', 
-                                backgroundColor: '#7b8db6', 
+                                backgroundColor: '#2563eb', 
                                 color: 'white', 
                                 fontWeight: 'bold', 
                                 padding: '14px', 

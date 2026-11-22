@@ -7,34 +7,35 @@ function DashboardConserje() {
     const { usuario } = useAuth();
 
     const tarjetas = [
-        { icono: '📦', titulo: 'Registrar Delivery', ruta: '/conserje/deliveries', desc: 'Ingresar llegada de paquetes o encomiendas.' },
-        { icono: '🚶', titulo: 'Registrar Invitado', ruta: '/conserje/invitados', desc: 'Control de entrada y salida de visitantes.' },
-        { icono: '📋', titulo: 'Reportes Pendientes', ruta: '/admin/reportes', desc: 'Ver y actualizar reclamos de residentes.' }, 
-        { icono: '👥', titulo: 'Listado de Residentes', ruta: '#', desc: 'Consultar información limitada de residentes.' },
+        { icono: '📦', titulo: 'Registrar Delivery', ruta: '/conserje/deliveries', desc: 'Ingresar llegada de paquetes.' },
+        { icono: '🚶', titulo: 'Registrar Invitado', ruta: '/conserje/invitados', desc: 'Control de entrada y salida.' },
+        { icono: '📋', titulo: 'Reportes', ruta: '/admin/reportes', desc: 'Ver y actualizar reclamos.' }, 
     ];
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col font-sans transition-colors duration-200">
+        <div style={{ minHeight: '100vh', backgroundColor: '#0f172a', display: 'flex', flexDirection: 'column' }}>
             <Header />
             
-            <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-slate-800 dark:text-white">¡Hola, {usuario?.nombre}! 👋</h1>
-                    <p className="text-slate-500 dark:text-slate-400 mt-1">Panel de Conserjería. Registra los accesos del día.</p>
+            <main style={{ flex: 1, padding: '40px 20px', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
+                <div style={{ marginBottom: '40px' }}>
+                    <h1 style={{ fontSize: '32px', fontWeight: 'bold', color: 'white', margin: 0 }}>¡Hola, {usuario?.nombre}! 👋</h1>
+                    <p style={{ color: '#94a3b8', marginTop: '10px' }}>Panel de Conserjería. Registra los accesos del día.</p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
                     {tarjetas.map((tarjeta, index) => (
                         <Link 
                             to={tarjeta.ruta} 
                             key={index} 
-                            className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 flex flex-col items-center text-center group cursor-pointer"
+                            style={{ backgroundColor: '#1e293b', padding: '24px', borderRadius: '16px', border: '1px solid #334155', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', textDecoration: 'none', color: 'white', transition: 'all 0.2s' }}
+                            onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.borderColor = '#3b82f6'; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.borderColor = '#334155'; }}
                         >
-                            <div className="w-16 h-16 bg-slate-50 dark:bg-slate-700 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">
+                            <div style={{ width: '64px', height: '64px', backgroundColor: '#334155', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px', marginBottom: '16px' }}>
                                 {tarjeta.icono}
                             </div>
-                            <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-2">{tarjeta.titulo}</h2>
-                            <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{tarjeta.desc}</p>
+                            <h2 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '8px', margin: 0 }}>{tarjeta.titulo}</h2>
+                            <p style={{ fontSize: '14px', color: '#94a3b8', margin: 0 }}>{tarjeta.desc}</p>
                         </Link>
                     ))}
                 </div>

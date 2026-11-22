@@ -32,12 +32,9 @@ function Header({ volverA = null, mostrarUsuario = true }) {
     const mostrarBotonLogout = usuario && mostrarUsuario;
 
     return (
-        <header 
-            className={`bg-slate-900/80 backdrop-blur-md border-b border-slate-800 fixed top-0 w-full z-50 transition-transform duration-300 ease-in-out ${
-                isVisible ? 'translate-y-0' : '-translate-y-full'
-            }`}
-        >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<header 
+    className={`bg-slate-900 border-b border-slate-800 transition-transform duration-300 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>            
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
                 
                 {/* Logo con tamaño estricto (h-10) */}
                 <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
