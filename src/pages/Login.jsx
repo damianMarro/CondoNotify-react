@@ -40,12 +40,12 @@ function Login() {
         }
     }
 
-    // Estilos forzados para asegurar que se apliquen
+    // Estilos en línea para forzar el diseño y evitar problemas con Tailwind
     const cardStyle = {
-        backgroundColor: '#1e293b', // Fondo oscuro
-        padding: '40px',            // 👈 Forzamos el espacio interno
-        borderRadius: '16px',       // Bordes redondeados
-        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5)', // Sombra
+        backgroundColor: '#1e293b', 
+        padding: '40px',            
+        borderRadius: '16px',       
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)', 
         width: '100%',
         maxWidth: '420px',
         border: '1px solid #334155'
@@ -53,22 +53,30 @@ function Login() {
 
     const inputStyle = {
         width: '100%',
-        padding: '12px 16px',       // 👈 Forzamos padding en inputs
+        padding: '14px 16px',       
         borderRadius: '8px',
-        backgroundColor: '#334155',
+        backgroundColor: '#0f172a', // Fondo más oscuro para el input
         color: 'white',
         border: '1px solid #475569',
-        marginBottom: '15px',
-        outline: 'none'
+        marginBottom: '5px',
+        outline: 'none',
+        fontSize: '15px'
+    };
+
+    const labelStyle = {
+        display: 'block', 
+        color: '#cbd5e1', 
+        fontSize: '14px', 
+        fontWeight: '600', 
+        marginBottom: '8px'
     };
 
     return (
-        <div className="min-h-screen bg-slate-900 flex flex-col font-sans">
+        <div style={{ backgroundColor: '#0f172a', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Header mostrarUsuario={false} />
             
-            <main style={{ paddingTop: '80px', paddingBottom: '40px' }} className="flex-1 flex items-center justify-center p-4">
+            <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '100px', paddingBottom: '40px', paddingLeft: '20px', paddingRight: '20px' }}>
                 
-                {/* TARJETA */}
                 <div style={cardStyle}>
                     
                     <div style={{ textAlign: 'center', marginBottom: '30px' }}>
@@ -80,11 +88,10 @@ function Login() {
                         </p>
                     </div>
 
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                        
                         <div>
-                            <label style={{ display: 'block', color: '#cbd5e1', fontSize: '14px', fontWeight: '600', marginBottom: '8px' }}>
-                                RUT
-                            </label>
+                            <label style={labelStyle}>RUT</label>
                             <input
                                 type="text"
                                 value={rut}
@@ -92,13 +99,11 @@ function Login() {
                                 placeholder="Ej: 19011022K"
                                 style={inputStyle}
                             />
-                            {errores.rut && <p style={{ color: '#ef4444', fontSize: '12px', marginBottom: '10px' }}>{errores.rut}</p>}
+                            {errores.rut && <p style={{ color: '#ef4444', fontSize: '12px', margin: '5px 0 0 0' }}>{errores.rut}</p>}
                         </div>
 
                         <div>
-                            <label style={{ display: 'block', color: '#cbd5e1', fontSize: '14px', fontWeight: '600', marginBottom: '8px' }}>
-                                Contraseña
-                            </label>
+                            <label style={labelStyle}>Contraseña</label>
                             <input
                                 type="password"
                                 value={password}
@@ -106,11 +111,11 @@ function Login() {
                                 placeholder="••••••••"
                                 style={inputStyle}
                             />
-                            {errores.password && <p style={{ color: '#ef4444', fontSize: '12px', marginBottom: '10px' }}>{errores.password}</p>}
+                            {errores.password && <p style={{ color: '#ef4444', fontSize: '12px', margin: '5px 0 0 0' }}>{errores.password}</p>}
                         </div>
 
                         {errores.general && (
-                            <div style={{ backgroundColor: 'rgba(239, 68, 68, 0.2)', color: '#fca5a5', padding: '12px', borderRadius: '8px', fontSize: '14px', textAlign: 'center', marginBottom: '20px' }}>
+                            <div style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', border: '1px solid #ef4444', color: '#fca5a5', padding: '12px', borderRadius: '8px', fontSize: '14px', textAlign: 'center' }}>
                                 {errores.general}
                             </div>
                         )}
@@ -119,7 +124,7 @@ function Login() {
                             type="submit" 
                             style={{ 
                                 width: '100%', 
-                                backgroundColor: '#2563eb', 
+                                backgroundColor: '#7b8db6', 
                                 color: 'white', 
                                 fontWeight: 'bold', 
                                 padding: '14px', 
@@ -127,7 +132,8 @@ function Login() {
                                 border: 'none', 
                                 cursor: 'pointer',
                                 marginTop: '10px',
-                                fontSize: '16px'
+                                fontSize: '16px',
+                                transition: 'background-color 0.2s'
                             }}
                         >
                             Ingresar al sistema
